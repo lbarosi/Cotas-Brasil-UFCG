@@ -1,0 +1,941 @@
+\documentclass[a4paper, 11pt]{hitec}
+%\usepackage[top=1cm,bottom=1cm,left=3cm,right=3cm,a4paper]{geometry} % Page 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc} % Required for including letters with accents
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{hyphenat}
+\usepackage{xcolor}
+\usepackage{graphicx} % Required for including pictures
+%\graphicspath{ {FIGURAS/} }
+\usepackage{blindtext}
+\usepackage[portuguese]{babel} % English language/hyphenation
+%\usepackage{fancyhdr}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{amsmath,amsfonts,amssymb,amsthm} 
+\usepackage{wasysym}
+\usepackage[font=scriptsize,skip=-5pt, width = 0.8\linewidth]{caption}
+%\usepackage{showframe}
+%\linespread{1.3}
+
+% \addtolength\headheight{-80.0pt}
+% \addtolength{\textheight}{-120.0pt}
+% 
+% \fancypagestyle{fancyfirst}
+% {\fancyhf{}
+% \chead{\includegraphics[width=0.2\textwidth]{UFCGlogo} }
+% \renewcommand{\headrulewidth}{0pt}
+% \renewcommand{\footrulewidth}{0pt}
+% \addtolength{\textheight}{-160.0pt}
+%\setlength{\headheight}{20.0pt}
+%\setlength\headheight{80.0pt}
+%}
+
+\author{Luciano Barosi}
+\title{O futuro das políticas afirmativas no Brasil? \footnote{O leitor pode perceber rapidamente que esse trabalho 
+não segue as orientações da ABNT, segue um estilo de referências consistente internamente baseado no estilo APA.}}
+\company{Universidade Federal de Campina Grande}
+
+
+\begin{document}
+
+\maketitle
+
+<<echo=FALSE>>=
+opts_chunk$set(echo=FALSE, warning=FALSE, results='hold', fig.align='left', dpi = 150, dev = "pdf", 
+out.width="\\linewidth", out.extra='keepaspectratio' )
+@
+
+<<echo=FALSE, warning=FALSE, message=FALSE>>=
+source("grafcotas.R")
+@
+
+
+\section{Introdução}
+
+As discussões acerca de políticas afirmativas são excepcionalmente sensíveis a elementos emocionais e ideológicos, ao 
+tempo em que se apresentam usualmente refratárias aos dados empíricos ou ao debate público que questione seus 
+pressupostos mais caros, mesmo que o questionamento tenha a intenção analítica de um exercício teórico e não um 
+julgamento prévio de suas conclusões.
+
+Em nenhuma outra senda do debate público é tão provável que a discussão acabe por ferir a \emph{Lei de Godwin} 
+\citep{godwin2003cyber} acerca da probabilidade de ocorrer uma citação ao Nazismo ou Fascismo. Eu já escrevi em 
+outras oportunidades e reitero que a utilização de conceitos dessa natureza em um debate público de forma leviana 
+colabora para o desenvolvimento de uma sociedade mais embrutecida, mais polarizada e menos tolerante. 
+
+Certamente não é a dificuldade ou a delicadeza de um assunto que vai furtá-lo da arena política, e não serei eu a 
+evitar essa discussão, no espírito analítico do esclarecimento dos conceitos, suas consequências e a análise empírica 
+dos resultados que ja existem. 
+
+Essa atitude é particularmente necessária nesse momento, cinco anos após a adoção de cotas para o ingresso no ensino 
+superior, dois anos após a adoção de cotas para o ingresso no serviço público. As leis de cotas preveem uma data de 
+validade de 10 anos, e nesse exato momento o setor público brasileiro traz para o centro do debate a questão da raça 
+como determinada fenotipicamente, tirando velhos e perigosos esqueletos de um armário colocado no centro de um paiol. 
+
+\section{As Cotas no Ensino Superior brasileiro}
+
+Não pretendo aqui fazer um apanhado histórico sobre as políticas afirmativas em geral, ou sobre as cotas em particular. 
+Para isso existe um grande número de revisões, com enfoques diferenciados. Uma abordagem suficientemente abrangente 
+pode ser encontrada em \citep{moehlecke2002accao}.
+
+Do ponto de vista do arcabouço normativo vigente no país, vou destacar apenas três dispositivos legais que servem 
+suficientemente aos propósitos desse trabalho. A \emph{Lei de Cotas} \citep{br-12711-12}, institui o regime de cotas 
+para o ingresso no ensino superior público federal. A lei foi aprovada e imediatamente regulamentada em Decreto 
+\citep{br-7824-12}, com normativas específicas publicadas no mesmo dia \citep{br-mec-18-12}.
+
+Por meio desses instrumentos foi adotado um sistema de cotas misto que termina por ser aplicado em cinco categorias 
+distintas. Cada candidato se inscreve nos processos seletivos a medida em que responde a três perguntas:
+
+\begin{enumerate}
+ \item Vou optar por cota?
+ \item Realizei todo o Ensino Médio em Escola Pública ou \textbf{equivalente}?
+ \item Tenho renda familiar per capita superior ou inferior à 1,5 salários mínimos?
+ \item Vou me \textbf{autodeclarar} preto, pardo ou indígena?
+\end{enumerate}
+
+Conforme as respostas do candidato ele se enquadrará em uma das cinco opções:
+\begin{description}
+ \item[Vagas Livres:] Candidato não cotista
+ \item[NAPPI>:] Candidato com renda maior do que 1,5 salários mínimos, \textbf{não} autodeclarado preto, pardo ou 
+indígena.
+ \item[APPI>:] Candidato com renda maior do que 1,5 salários mínimos, autodeclarado preto, pardo ou 
+indígena.
+ \item[NAPPI<:] Candidato com renda menor do que 1,5 salários mínimos, \textbf{não} autodeclarado preto, pardo ou 
+indígena.
+ \item[APPI<:] Candidato com renda menor do que 1,5 salários mínimos, autodeclarado preto, pardo ou 
+indígena.
+\end{description}
+
+A divisão do número de vagas disponíveis segue os seguintes critérios:
+
+\begin{enumerate}
+ \item As vagas são divididas em duas parte, cada qual com 50\% do total. Uma parte são as vagas livres e a outra parte 
+são as vagas reservadas.
+ \item As vagas reservadas são divididas em duas partes iguais. Uma para renda per capita maior do que 1,5 salários 
+mínimos e outra para renda per capita menor do que 1,5 salários mínimos.
+ \item Cada uma das partes acima (cujo tamanho e de 25\% do total de vagas) é dividido conforme a proporcionalidade 
+registrada no último censo demográfico do  IBGE para pretos, pardos e indígenas na população.
+\end{enumerate}
+
+A divisão das cotas esta indicada de maneira pictórica na figura (\ref{fig:cotas}). No caso de arrendondamento, sempre 
+se arredonda segundo a ordem em que autodeclaração precede não-autodeclaração e renda inferior precede renda superior. 
+Igualmente, para a ocupação das vagas, primeiro são preenchidas as vagas livres, supondo que não há cotas. Depois as 
+cotas são preenchidas. Sobrando vagas nas cotas, candidatos autodeclarados negros preenchem vagas que sobraram dos 
+não-autodeclarados, candidatos de renda inferior preenchem vagas de candidatos de renda superior. Vamos ver o resultado 
+dessas regras em ação no caso da UFCG, analisado na seção \ref{ufcg}.
+
+\begin{figure}[!h]
+\centering
+\begin{align*}
+\begin{array}{ccccccc}
+ & \overbrace{\Circle}^{\text{Livres}}  & & & & \\
+ \underbrace{\Box}_{\text{Vagas}} &  & & & & \\
+ & & & & \LEFTCIRCLE & \text{APPI}\\
+ & &  & \overbrace{\LEFTcircle}^\text{Renda superior 1,5SM} & &\\
+ & &  & & \Rightcircle & \text{NAPPI}\\
+ & \underbrace{\CIRCLE}_{\text{Rede Pública}} & & & \\
+  & & & & \RIGHTCIRCLE & \text{APPI}\\
+ & & & \underbrace{\RIGHTcircle}_\text{Renda inferior 1,5SM} & \\
+ & & &  & \Leftcircle & \text{NAPPI}\\
+\end{array}
+\end{align*}
+\caption{\label{fig:cotas}Relação entre as diferentes cotas de acesso ao ensino superior}
+\end{figure}
+
+O fundamento de que todos os segmentos étnico-raciais sejam representados conforme suas distribuições na 
+população em setores arbitrários da sociedade provem, na melhor das hipóteses, de uma incompreensão 
+estatística profunda. Contudo, não é de setores arbitrários da sociedade que se tratam esses dispositivos, mas sim do 
+acesso à educação superior, que se correlaciona fortemente, e em todos os países do mundo, com melhorias nas condições 
+de vida dos indivíduos. 
+
+A população brasileira apresenta índices muito baixos de escolaridade e apenas uma fração pequena dessa sociedade tem 
+acesso ao ensino superior. Dessa forma, a indução a uma maior escolaridade, para todos os grupos sociais é fortemente 
+desejável, e consignada em todos os documentos norteadores das políticas do Estado brasileiro.
+
+Evidentemente uma política de acesso não pode ser suficiente, o que é realmente necessário é uma política de 
+valorização do ensino superior como cultura, de maneira transversão à todos os grupos étnicos e todos os níveis da 
+sociedade. Em todas as pesquisas internacionais tem ficado claro que a cultura do núcleo familiar com relação à 
+educação formal é determinante para o direcionamento e sucesso dos jovens em seu futuro acadêmico.
+
+O ambiente acadêmico não deve necessariamente representar a composição étnica da sociedade, mas deve ter em seus 
+valores o respeito a essa diversidade étnica, a possibilidade de um acolhimento efetivo aos mais diferentes extratos 
+sociais e econômicos da sociedade, de forma a garantir ao estudante o pertencimento a um grupo que se quer mais amplo 
+do que seu grupo originário, ao grupo acadêmico. Saliento, não é desejável que a cultura acadêmica mimetize, 
+internalize ou emule elementos das diversas culturas existentes na sociedade, o que é desejável que ela tenha a força 
+de prover mais uma identidade ao indivíduo, que não se confronte com os valores de seu grupo de origem ou que o faça se 
+sentir excluído nesse ou naquele grupo. 
+
+O conjunto de instituições públicas federais de ensino superior não é representativo do conjunto das instituições de 
+ensino superior, tendo uma pequena porcentagem de matrículas e características bastante peculiares. Sua natureza 
+pública e financiada pelo Estado certamente reveste de responsabilidades adicionais o seu funcionamento, afim de 
+garantir a utilização efetiva dos recursos públicos. 
+
+O ingresso ao ensino superior brasileiro sempre foi realizado por meio de vestibulares, de forma que nunca houve 
+nenhuma forma de discriminação clara para o ingresso de qualquer etnia ou classe social. A análise da população dessas 
+instituições, sobretudo até a década de 90, mostra um flagrante contraste na representatividade dos grupos 
+étnico-raciais, sobretudo negros e indígenas, e extratos de menor renda da sociedade (grupos que apresentam grande 
+correlação, ainda que se deva reconhecer algumas distinções importantes).
+
+Com o grande momentum das políticas sociais do início do milênio, as cotas de positivam como legislação na presente 
+década. A discussão no Brasil apresentou os elementos próprios de sua identidade, mas teve importantes influências no 
+movimento de cotas da década de 60 nos Estados Unidos. Não houve uma discussão acadêmica clara sobre os fatos empíricos 
+já existentes, na crença de que cada país é único com respeito a essa matéria (a despeito das evidências em contrário), 
+havendo muito mais uma discussão política.
+
+Entrementes, nessa história recente das políticas afirmativas no Brasil existem características distintivas, 
+democráticas e que podem transformar uma história de sucesso duvidoso, como a história das políticas afirmativas, em 
+uma história de maior justiça social, caso saibamos, em cada momento, avaliar o que está acontecendo e não ceder aos 
+argumentos rasos e a tentações políticas sombrias.
+
+As perguntas imediatas que surgem nesse cenário são:
+
+\begin{enumerate}
+ \item As cotas para ingresso no Ensino Superior são necessárias?
+ \item As cotas para ingresso no Ensino Superior são úteis?
+ \item Quais são os possíveis efeitos colaterais?
+\end{enumerate}
+
+
+\section{As Cotas no Serviço Público Federal e o Problema da Raça}
+
+A Lei Nº 12.990, de 09 de JUnho de 2014 \citep{br-12990-14}, reserva aos negros, 20\% das vagas oferecidas em concursos 
+públicos para provimento de cargos efetivos no âmbito da administração federal. A lei define como elegíveis às cotas de 
+maneira análoga ao caso das cotas para o Ensino Superior:
+
+\begin{quote}
+Art. 2º aqueles que se autodeclaram pretos ou pardos o ato da inscrição no concurso público, conforme 
+o quesito cor ou raça utilizado pelo IBGE. 
+\end{quote}
+
+Provavelmente em algum devaneio de leitura de Charles Sanders Peirce, o legislador resolveu desafiar a lógica e 
+introduziu o parágrafo único:
+
+\begin{quote}
+ Parágrafo único.  Na hipótese de constatação de declaração falsa, o candidato será eliminado do concurso e, se 
+houver sido nomeado, ficará sujeito à anulação da sua admissão ao serviço ou emprego público, após procedimento 
+administrativo em que lhe sejam assegurados o contraditório e a ampla defesa, sem prejuízo de outras sanções cabíveis.
+\end{quote}
+
+Acontece que uma Lei não é neutra socialmente. Caso fosse algum conjunto de regras simplesmente, como uma receita 
+culinária, não haveria nenhum problema em acrescentar uma informação irrelevante. Imagine o caso:
+
+\begin{enumerate}
+ \item Adicione sal e pimenta a gosto.
+ \item Na hipótese de constatar que a declaração é falsa, o cozinheiro ficará sujeito a anulação de seu prazer 
+gastronômico,
+\end{enumerate}
+
+Ninguém que lesse essa receita imaginaria que há uma resposta correta para a expressão \emph{a gosto}, mesmo todos 
+aqueles gastrônomos diletantes que se viram em situações difíceis ao mensurar ingredientes que não dominam (exatamente 
+pelo fato de não terem ainda uma definição própria do gosto e não por considerarem-no absoluto).
+
+Qualquer dispositivo em uma Lei se abre para a sociedade e será positivado por meio de uma interpretação baseada em uma 
+moral jurídica específica, usualmente com um debate considerável entre aqueles habilitados para emprestar ao 
+dispositivo um valor normativo específico. 
+
+Felizmente não há nenhuma lei para definir os diferentes grupos étnico-raciais que coexistem em um país continental e 
+multiétnico como o Brasil. Mas a discriminação dos diferentes grupos é de fato bastante necessária para que se possam 
+dirigir as políticas sociais. Do ponto de vista oficial, o Governo brasileiro aceita o quesito \textbf{cor/raça} 
+conforme a definição do IBGE\footnote{Instituto Brasileiro de Geografia e Estatística}:
+
+\begin{quote}
+ \textbf{Cor ou Raça} - característica declarada pelas pessoas de acordo com as seguintes opções: branca, preta, 
+amarela, parda ou indígena.
+\end{quote}
+
+Como resultado da incomum elevada miscigenação brasileira, é bastante difícil singularizar grupos étnico-raciais. Em 
+todo o país, fala-se a mesma língua, com uma variedade de sotaques que está longe de consistir em variedades dialetais, 
+os modos de vida são bastante parecidos e as religiões majoritárias coexistem sem marcações que possam ameaçar o tecido 
+social, destarte não temos variedades étnicas que não sejam étnico-raciais. 
+
+Podemos distinguir mais claramente as diversas etnias indígenas, contudo a empresa colonial no Brasil acabou por 
+levá-los quase ao extermínio total, representando hoje 0,41\% da população, representados por mais de 300 etnias 
+\citep{ricardo2011povos}.
+
+O documento que é um verdadeiro divisor de águas com respeito às políticas brasileiras de ações afirmativas, que 
+subsidiou a participação do Brasil da 3ª Conferência Mundial da ONU contra o racismo, em Durban adota uma dicotomia 
+étnico-racial branco/negros \citep{saboia2001conferencia}, representada pela identidade legal dos negros como os pretos 
+e pardos que foi consignada na lei.
+
+A escolha metodológica do IBGE tem uma história bastante bem documentada \citep{da2013autodeclaraccao}. A 
+PNAD\footnote{Pesquisa Nacional por Amostra de Domicílio}  1976 e a PME \footnote{Pesquisa Mensal de Emprego} 1988 
+colheram informações sobre a autodeclaração da cor em campo aberto, coletando mais de 130 denominações em cada uma 
+delas. Porém, essa diversidade aparente mostra uma unidade bastante significativa quanto aos termos mais usados. Dos 
+seis termos mais utilizados, cinco deles são aqueles utilizados nas pesquisas, havendo a exclusão do termo moreno que 
+considerou-se dúbio e identificável com o termo pardo. Houve também correlação entre a autodeclaração e a 
+heterodeclaração, considerando a opinião do entrevistador. Com a introdução da informação de cor/raça a partir do  
+Censo Escolar 2005, acabamos por ter assegurado que os conceitos socialmente aceitos para as descriminações 
+étnico-raciais são bastante consolidados em todos os grupos sociais, que entendem o seu significado e conseguem aplicar 
+os termos de uma maneira que mostra um grau alto de estabilidade, ou seja, concordância entre a auto- e a 
+heterodeclaração. 
+
+Não podemos considerar que a solução para o problema seja perfeita. Certamente deve-se considerar a identificação real 
+de cada sujeito com a categoria na qual se enquadra, se esse enquadramento lhe é ou não doloroso, se ele considera que 
+esta fora de categoria, bem como as representações sociais de cada categoria devem ser suficientemente trabalhadas para 
+que sua função seja compreendida como um trabalho classificatório, voltado para o desenho de políticas públicas, 
+negando qualquer tipo de estereótipo. 
+
+Essa proposta classificatória é aquela que vem sendo utilizada para a discussão da questão étnico-racial brasileira, 
+com foco predominante na cor, não na etnia. Negros e brancos são igualmente afastados de uma possível identificação 
+étnica oficial. Sobrevivendo a palavra \emph{raça} provavelmente para lembrar que a classificação se refere à alguns 
+traços imanentes dos sujeitos e não transitórios.
+
+A introdução do negro no Brasil via comércio escravagista dificultou a formação de grupos étnicos muito consolidados, 
+uma vez que o comércio era mais rentável se as famílias fossem separadas para diminuir a possibilidade de gerar prole e 
+manter um grupo grande de escravos falantes da mesma língua poderia ser perigoso \citep{darcy1995povo}. Dessa forma, 
+não é comum no Brasil grupos étnicos muito bem definidos de negros, tendo já havido a miscigenação com índios, brancos 
+e com negros de outras etnias. Bantus, Nagôs, Jejês Hauçás e diversas outras etnias que podem ser claramente 
+reconhecidas hoje na África e enfrentam as vezes um problema de convivência suficientemente forte para a criação de 
+políticas de cotas bastante restritivas na Nigéria, no Brasil não preservam essa etnia, sendo mais devedores de uma 
+cultura cabocla.
+
+O que se denomina branco também, por vezes querendo indicar europeu, esconde uma diversidade de cores, vozes e saberes 
+muito distintos, chegados em tempos diferentes e melhor ou pior assimilados a cultura brasileira dominante, visto que 
+possuem um período de imigração bastante mais recente. Algumas características dessa população são bastante 
+interessantes, considerando a PME 1998 \citep{schwartzman1999fora}, da totalidade de brasileiros que se declararam 
+brancos em 1998, 83,11\% delas se declararam também \emph{Brasileiras}, depois aparecem os italianos (15,72\%), os 
+portugueses (14,50\%), espanhóis, alemães, indígenas, Japoneses...
+
+Com a característica da população que temos, sem dúvida precisamos de algum índice e o índice padronizado de cor/raça, 
+e a agregação negro/branco são o melhor que se pode fazer. Esses são os números que utilizamos para estudar as 
+estatísticas que justificam ou não a necessidade das políticas afirmativas, são os classificadores que ensinamos a 
+nossas crianças, são aqueles consignados como critérios legais.
+
+Voltando a analisar a questão da Lei e o paradoxo do mentiroso que ela encerra, o que temos que é a lei deve servir a 
+propósitos finalísticos e o parágrafo único aparenta minar que o caput do Art. 3º seja absoluto. Mas o que poderia ser 
+apenas uma ironia ganha ares preocupantes quando surge no horizonte questionamentos jurídicos quanto à aplicação do 
+princípio da autodeclaração e quando o próprio governo, em portaria normativa \citep{br-mpog-3-16} decide pela criação 
+de uma \emph{comissão de verificação da autodeclaração racial}. O ânimo legiferante altera o equilíbrio hormonal e 
+alguém decide por criar um critério racial para o brasil, \textbf{baseado exclusivamente em critérios fenotípicos}. 
+
+A variabilidade do genoma humano dentro de um grupo étnico é maior do que a variabilidade entre os diversos grupos 
+étnicos, impossibilitando a definição de raças humanas, do ponto de vista da taxonomia biológica. O legislador não 
+recuou e optou por ressuscitar a craniometria, o estudo do desenho da palma das mãos e das digitais, métodos que foram 
+muito aperfeiçoados na década de 30 para a separação de Judeus de Arianos, com o vigor pujante da ciência irrefutável 
+\citep{gould1978morton}.
+
+E notavelmente perigosa e retrógrada a ação tomada quando vista a luz de documentos internacionais importantes. 
+Considerando inicialmente a Declaração das Raças da UNESCO \citep{unesco-1950}, mesmo com o texto revisto após as 
+críticas durante o ano de 1950, temos:
+
+\begin{quote}
+ Human races can be, and have been, classified in different ways by different anthropologists. Most of them agree in 
+classifying the greater part of existing mankind into at least three large units, which may be called major groups (in 
+French grand-races, in German Hauptrassen). \textbf{Such a classification does not depend on any single physical 
+character, nor does for example, skin colour by itself necessarily distinguish one major group from another}. 
+Furthermore, so far as it has been possible to analyse them, the differences in physical structure which distinguish one 
+major group from another give no support to popular notions of any general ‘superiority’ or ‘inferiority’ which are 
+sometimes implied in referring to these groups. \footnote{grifo meu}
+\end{quote}
+
+O texto dessa declaração foi produzido por especialistas cientistas de diversas áreas, biólogos, 
+sociólogos, antropólogos e estatísticos. O texto original sugeria a supressão do termo raça para o discurso acerca de 
+humanos e não considerava o parágrafo acima citado. A citação buscou refletir uma demanda da comunidade científica em 
+ser capaz de realizar estudos acerca das raças humanas, considerando o estado de arte de algumas ciências da época, 
+ignorando os resultados da genética que eliminam totalmente a possibilidade de definir raças humanas.
+
+Não parece razoável que todos os concursos públicos tenham que ser submetidos a um grupo de especialistas em definição 
+de raça, caso eles existam em número suficiente, e essa premissa coloca por terra o critério que vem sendo adotado no 
+brasil nas ultimas décadas para a análise das políticas públicas.
+
+Nesse momento, algumas perguntas podem ser levantadas:
+\begin{enumerate}
+\item Esse evento poderia ter sido previsto?
+\item Quais as consequências possíveis de uma comissão de tal tipo?
+ \item Esse evento é necessário?
+\end{enumerate}
+
+\section{Rationale}
+
+Imagine que você está caminhando pela rua e encontre uma pessoa pobre pedindo dinheiro. Sua decisão de dar ou não algum 
+dinheiro é uma decisão \textbf{ética} baseada no que você considere levar uma vida boa. Você vai analisar se tem ou não 
+o dinheiro disponível, qual o uso que faria dele, a possibilidade da pessoa estar mentindo, qual o uso que a pessoa 
+faria com o dinheiro, se a obrigação seria sua ou do governo...
+
+Essa decisão não implica necessariamente que você considere essa decisão certa ou errada. Ajudar ou não uma pessoa em 
+necessidade é uma decisão \textbf{moral}. O conjunto das relações morais que interferem na sua relação direta com os 
+outros indivíduos de uma sociedade é a sua \textbf{moral pessoal}. 
+
+Algumas relações com as outras pessoas são mediadas por instituições, como o governo, situações nas quais você 
+considera aceitável cumprir determinadas leis, que pessoas tenham a sua liberdade provisoriamente privada, participem 
+nas formas decisórias da sociedade. Essa é a \textbf{moral política}, que justifica as relações de certo ou errado no 
+âmbito da interação das pessoas mediadas por instituições governamentais. 
+
+O \textbf{direito} e a \textbf{política} são construções normativas, fundamentadas na moral política mas que não se 
+confundem com essa. Ambos tem seus próprios métodos e se interligam com a moral por meio de uma estrutura 
+interpretativa que deve adquirir consistência suficiente em seus conceitos. Juntamente com os fundamentos morais, ambos 
+os campos provem um certo tipo de técnica para as suas ações no campo prático. Fenomenologicamente, podemos avaliar os 
+fatos do direito ou da política mediante suas expressões técnicas, mas essa justificativa só existe como escala de 
+valor no campo moral.
+
+Sempre existe um conflito entre o indivíduo e o coletivo nesse caso, que pode ser bem representado pelo conflito 
+existente entre os conceitos de liberdade e igualdade. Podemos bem denominar de democracia a solução de compromisso 
+entre essas duas forças, pesadas em uma balança a qual chamamos de justiça. Nessa rede estão entretecidos todos os 
+conceitos dos parágrafos anteriores.
+
+Essas distinções são importantes para discutir as políticas afirmativas.
+
+Consideremos que o indivíduo, para viver bem, deve ser livre. O que isso significa? Liberdade para quê? Ao considerar a 
+liberdade como um conceito centrífugo, do indivíduo para fora, teremos necessariamente o conflito com a igualdade, 
+porque não há nenhum outro conceito para limitar seu domínio. Por outro lado, podemos pensar em liberdade centrípeta, 
+ou seja, não consideramos  a liberdade de fazer alguma coisa mas sim a liberdade negativa. Nesse sentido, por motivos 
+diversos, Dworkin \citep{dworkin2014raposa} e Sen \citep{sen2011ideia} concordam. 
+
+Consideremos desejável que um indivíduo tenha a capacidade para realizar tudo que ele tem razoavelmente pode querer, 
+ancorando a liberdade no seu desejo de agir positivamente para realizar sua capacidade e também eu seu conjunto ético, 
+fundado na razão do querer. Uma sociedade justa é aquela que implementa essa necessidade igualitariamente para todos os 
+seus indivíduos, ou seja, uma sociedade em que podem existir desigualdades reais provenientes do desejo de agência de 
+cada um, mas não por quaisquer razões externas que não tenham uma razão moral lastreada em que um indivíduo deve 
+razoavelmente querer apenas aquilo que é possível para garantir a igualdade das oportunidades da sociedade. Ou seja, os 
+indivíduos dessa sociedade justa aderem a uma moral igualitária, em princípio.
+
+Não é necessário repisar a complexidade do assunto, as dificuldades com os conceitos de justiça social, moral, 
+igualdade e liberdade. Mas conseguimos acordar com os termos a serem utilizados para a análise que segue e delimitamos 
+os referenciais teóricos da questão, em linhas gerais. Esses conceitos serão utilizados para a discussão acerca das 
+políticas afirmativas, que, via de regra, apresentam dois argumentos principais:
+
+\begin{enumerate}
+ \item As políticas afirmativas são uma reparação histórica.
+ \item As políticas afirmativas contribuem para a justiça social, pela via igualitária.
+\end{enumerate}
+
+A reparação histórica é um argumento simultaneamente errado e perigoso, representando tudo o que as políticas 
+afirmativas podem oferecer de pior.
+
+É bastante lamentável, mas, nos 10 mil anos de história escrita da espécie humana, não houve um único momento, nem um 
+único lugar, em que não houvesse algum tipo de discriminação racial com consequências trágicas. Simplesmente todos os 
+povos do globo são elegíveis a algum tipo de reparação se somos levados a concluir que o referido povo que sofreu os 
+abusos é o mesmo de agora. Armênios podem exigir reparação de Turcos, mongóis devem exigir reparação de chineses e 
+vice-versa, europeus devem exigir reparação de mongóis, italianos de gregos, franceses de italianos... A escravidão 
+existiu por tão longo tempo quanto o comércio e foi a nossa civilização no Sec. XIX que a aboliu. 
+
+Para admitir a necessidade de reparação precisamos conseguir identificar o povo que sofreu o dano com o povo atual. Mas 
+isso não é possível na vasta maioria dos casos. Após duzentos anos, os povos se miscigenaram e deixa de ser claro como 
+discernir coletivamente aqueles que são diretamente descendentes. 
+
+Por outro lado, deve-se exigir que os responsáveis sejam chamados ao pagamento, e tampouco isso fica claro. No caso do 
+Brasil, a população de negros escravos era cerca de 1,5 milhões em 1874, enquanto a de negros livres e pardos 
+ultrapassava 4 milhões, em 1887 o número de negros escravos era inferior à 750.000. Por outro lado, de 1870 a 1920, 
+chegaram 3,3 milhões de imigrantes no Brasil, 1,4 milhões de italianos que chegaram para trabalhar nas lavouras de café 
+em situações muito semelhantes à escravidão do Sec. XIX (embora bastante diferente da escravidão do Brasil colonial).
+
+Consideremos o caso da Nigéria, dividida entre Hauças, Igbos e Yorubás, vive grandes conflitos raciais com um sistema 
+de políticas afirmativas voltadas para o povo Hauça. Mas não é possível considerar nenhuma dívida histórica nesse caso, 
+vez que era exatamente esse povo dominante do sec XII ao sec XVIII, tendo como importante item do seu comércio escravos 
+das etnias Igbos e Yorubás. Não parece fazer sentido cobrar dos Hauças da atualidade qualquer dívida histórica, quando 
+são eles mesmos que estão em difícil situação quanto a representatividade em seu próprio país, apesar da maioridade 
+numérica.
+
+Nenhuma transação pode ser realizada sem que o devedor e o pagador possam ser identificados. Identificar alguém 
+arbitrariamente como devedor e como pagador e criar uma obrigação entre eles é uma receita para o ódio racial, não para 
+a justiça social.
+
+De maneira alguma isso significa negar a história, isso significa reconhecê-la conforme a realidade do tecido social 
+hodierno. Nenhum elemento de minorias\footnote{vamos chamar de minoria qualquer grupo sub-representado com respeito ao 
+acesso de algum bem da sociedade, independentemente de sua representação na sociedade} deve sentir que seu destino foi 
+traçado pela forma como seus ancestrais foram traçados. Isso significa aumentar a autoestima dos povos mas não 
+necessariamente reforçar a sua identidade étnico-racial. O reforço das identidades favorece o contraste e o conflito. 
+Considerar a determinação do futuro dos povos com respeito ao passado de seus ancestrais ainda mina a sua auto-estima, 
+considerando que aqueles que tiveram sucesso o tiveram apenas por meio de políticas afirmativas. 
+
+Se desejamos uma sociedade justa e harmônica, desejamos que a identidade étnico-racial seja diminuída e o indivíduo 
+seja valorizado como ser independente tanto de sua ancestralidade como de sua etnia ou cor/raça. O foco de qualquer 
+política pública afirmativa é o individuo mais do que seu grupo. Retornaremos a esse ponto no final dessa seção.
+
+Vamos analisar a segunda afirmação das políticas afirmativas. Existem muitos recortes possíveis em uma sociedade, que 
+podem ser utilizados para diversos fins. Contudo não é justo supor que a distribuição do recorte se reproduza em 
+qualquer critério arbitrário. 
+
+Podemos considerar o recorte de cor/raça e analisá-lo com relação à renda e emprego, família, nível de estudo, 
+participação na política, participação na cultura, esportes, saúde... Nenhuma razão estatística existe para supor que 
+as distribuições demográficas se reproduzam em todos esses casos. 
+
+Podemos fazer o mesmo recorte considerando a renda individual ou familiar e fazer a mesma análise. Novamente, o mesmo 
+raciocínio se aplica quanto às expectativas que devemos ter.
+
+Algumas correlações encontradas podem ser decorrentes de algum fenômeno explicável ou não e outras correlações podem 
+ser simplesmente representativas da estatística investigada e a aleatoriedade. Nunca devemos menosprezar os efeitos da 
+aleatoriedade na dinâmica populacional, por mais que tenhamos o sonho explicativo do universo, a realidade consiste em 
+efeitos causais e efeitos aleatórios, acidentes históricos que podem acontecer, e alterar significativamente as 
+dinâmicas subjacentes.
+
+Portanto, existem desigualdades fortuitas e outras não. Serão as desigualdades más, independente da origem? Não existe 
+nenhum elemento que corrobore essa tese de maneira contundente. O desenvolvimento econômico da sociedade como um todo 
+tem um efeito benéfico para todos, independente do nível de desigualdade, ainda que isso seja contrário ao senso comum. 
+Essa é uma tendência de longo prazo, observado de maneira documentada nos últimos mil anos, que se aplica de geração a 
+geração, mas não necessariamente para o mesmo indivíduo. Cada um, certamente, vive melhor hoje do que os pais e avós, 
+mesmo as pessoas pobres hoje vivem bastante melhor do que reis na idade média, temos melhor expectativa de vida, melhor 
+acesso a saúde, lazer e educação.
+
+Analisando segundo os termos que propusemos, o desenvolvimento da sociedade aumenta a capacidade geral das indivíduos. 
+É claro que uma grande diferença de capacidades produz um tensionamento social com consequências redistributivas, mas 
+isso não diminui o fato de que, de fato, todos estão melhores. Essa constatação de longo prazo sofreu algumas críticas 
+quando considerada no curto prazo, em particular na escala de tempo de no máximo um século, contudo as críticas que 
+indicam uma possível tendência de certos modos de capitalismo de concentrar riqueza são bastante controversas 
+\citep{goes2016testing} e ignoram as dinâmicas variadas com respeito aos tipos de interação diferente entre a população 
+e as formas de produção e geração de riqueza.
+
+É a baixa renda que pode ter os efeitos mais deletérios nos grupos sociais, principalmente se essa é globalmente 
+pequena e insuficiente para as condições de subsistência ou para o acesso aos serviços sociais dignos disponíveis ao 
+restante da população, incluindo os serviços de saúde, educação, condições de trabalho, moradia e higiene. Assim, vamos 
+focar na renda no restante do trabalho, tanto em sua acumulação como na sua distribuição.
+
+Com respeito a qualidade de vida, um dos indicadores mais relevantes é a expectativa de vida ao nascer, que pode ser 
+analisada juntamente com a PIB per capita dos países, produzindo o que ficou conhecido como curvas de Preston. Podemos 
+ver essa curva para os anos de 1965 e 2005 nas figuras \ref{fig:grafPreston1965}, \ref{fig:grafPreston2005}. 
+
+O claro patamar formado a partir de certo nível de renda indica que para países pobres, um pequeno incremento na 
+economia do país pode significar um grande incremento na expectativa de vida, por outro lado, para países ricos, seria 
+necessário um aumento muito significativo da renda para obter algum benefício com respeito à expectativa de vida das 
+pessoas. Sem dúvida existem outros elementos a ser considerados, em particular aqueles relacionados a medidas de saúde 
+propriamente ditas, para a modernização e adoção de boas práticas, que tem mudado a forma específica da curva quando 
+observada sua evolução no tempo. Contudo é inquestionável que, para os países distantes do patamar, é o aumento da 
+renda o aspecto determinante.
+
+Exemplos bastante emblemáticos podem ser vistos no comportamento da Coréia (KOR), Argentina (ARG), Espanha (ESP), Japão 
+(JPN) e Grã-Bretanha (GBR). à exceção do primeiro, todos já estavam no patamar mais alto em 1965 e a grande mudança da 
+renda per capita não alterou significativamente a sua situação. (Embora, obviamente, a altura do patamar dos países 
+tenha variado no tempo, aumentando quase 10 anos). A Coréia mostra como o seu grande aumento inicial de renda teve um 
+efeito significativo na redução da sua disparidade com os países mais ricos, mas a partir de certo ponto o acréscimo da 
+renda parou de beneficiar tão fortemente a expectativa de vida.
+
+Em 1965 o Brasil tinha uma expectativa de vida de 56,7 anos e uma renda média de U\$259. 40 anos depois, temos uma 
+expetativa de vida de 71,8 anos e uma renda de U\$4730. Estamos nos aproximando do patamar. Qual terá sido o principal 
+fator para contribuir para esse avanço? Como avançaram a renda e a desigualdade?
+
+<<grafPreston1965, fig.cap="\\tiny Expectativa de vida média ao nascer por PIB per capita para o ano de 1965.Dados obtidos em \\citep{WORLDBANK}  ",fig.asp=0.56>>=
+grafPreston1965
+@
+
+
+<<grafPreston2005, fig.cap="\\tiny Expectativa de vida média ao nascer por PIB per capita para o ano de 2005.Dados obtidos em \\citep{WORLDBANK}  ",fig.asp=0.56>>=
+grafPreston2005
+@
+
+
+Com base da curva de Preston não temos como saber se houve, nesses países, um aumento de renda simultâneo à uma melhor 
+distribuição. Podemos observar a renda de um país e a distribuição de renda, simultaneamente em um gráfico que separa o 
+topo da renda do país em percentis. A renda do país tem uma forte correlação com a renda dos habitantes no topo da 
+pirâmide de renda. Nas figuras \ref{fig:desigualdadeIndia} e \ref{fig:desigualdadeUS} podemos ver a média de renda dos 
+mais altos percentis de renda para a Índia e para os Estados Unidos durante o sec. XX. ambos indicam uma menor igualdade 
+de renda durante um longo período da metade do século, com aumento significativo da desigualdade após o final da década 
+de 1960. 
+
+
+
+<<desigualdadeIndia, fig.cap="\\tiny Renda média na Índia, sec XX, mostrando percentis de renda 1, 0,5 e 0,1. Valores em Rúpias 2016. Dados obtidos em \\citep{WORLDBANK} ", fig.asp=0.56>>=
+desigualdadeIndia
+@
+
+
+
+<<desigualdadeUS, fig.cap="\\tiny Renda média nos Estados Unidos, sec XX, mostrando percentis de renda 1\\%, 0,5\\% e 0,1\\%. Valores em U\\$ 2016. Dados obtidos em \\citep{WORLDBANK} ",fig.asp=0.56>>=
+desigualdadeUS
+@
+
+
+Segundo Thomas Sowel \citep{sowell2005accao}, esses são dois países emblemáticos para o estudo de ações afirmativas. A 
+Índia é o país pioneiro da prática moderna desse tipo de ações, iniciando já na década de 40, e os Estados Unidos 
+servindo como modelo para diversos países, inclusive o Brasil, com o seu sistema de cotas iniciando no final da década 
+de 60. Ambos os países tem uma menos desigualdade de renda no período anterior à implantação dos sistemas de cotas. Não 
+podemos, contudo, desconsiderar outros fatores para a geração de desigualdade nesses países, o que Sowell falha em 
+analisar. 
+
+Existem ainda duas outras questões importantes de serem mencionadas. Comumente se afirma que a desigualdade em si não é 
+tão importante em uma sociedade com grande mobilidade social, o que indicaria a continua reconstrução das suas 
+estruturas em função de dinâmicas muito ativas da  atividade econômica.  Como medida de mobilidade social é 
+possível utilizar a elasticidade de proventos intergeracional, um coeficiente de correlação entre a renda de pais e 
+filhos. Em uma sociedade com oportunidades iguais para todos é uma sociedade na qual o rendimento dos filhos não 
+depende 
+do rendimento dos pais, e portanto teria correlação 0. Quanto mais próximo de um esse coeficiente, maior a relação 
+entre 
+os salários de pais e filhos e portanto mais estamentária é a sociedade \citep{corak2012}. Peru, China e Brasil lideram 
+esse rank, o Brasil com um índice de 0.58, o que significa que cada cidadão brasileiro de uma chance de 42\% apenas de 
+melhorar a sua renda, quando comparado com os pais. 
+
+Agravando a situação, é inocente considerar que um país pode ser desigual e ter uma grande mobilidade econômica, o que 
+ficou conhecido como gráfico de Gatsby \ref{fig:roser}, mostrando a correlação entre a mobilidade social no eixo 
+vertical, e a desigualdade de renda, no eixo horizontal, indicada pelo coeficiente de Gini. O coeficiente de Gini 
+assume valores de 0\% a 100\% e a mobilidade social de 0 a 1. Não resta dúvida de que os países mais desiguais são 
+também aqueles com menor mobilidade social.
+
+\begin{figure}
+\centering
+\includegraphics[width = \linewidth]{gatsby.png}
+\caption{Curva de Gatsby para vários países. Dependência da elasticidade intergeracional com a desigualdade social, 
+medida pelo coeficiente de Gini. Imagem obtida em \citep{roser-2016}}
+\label{fig:roser}
+\end{figure}
+
+
+A desigualdade em si não tem nenhum efeito mensurável na saúde das pessoas \citep{deaton2003health}, contudo parece 
+bastante claro que o Brasil, em particular, já gozou do crescimento econômico possível sem que a questão da igualdade 
+não seja seriamente discutida. Uma sociedade desigual economicamente certamente tem prejuízos psicológicos para os seus 
+indivíduos, favorece ao ódio entre os diferentes indivíduos e afronta a dignidade humana. É difícil conciliar uma 
+desigualdade perene com qualquer conceito moderno de justiça, essa é uma sociedade que solapa mesmo dos nascituros uma 
+parte significativa de suas capacidades e não promete lhe devolver em momento algum.
+
+Se vivemos em uma sociedade em que as desigualdades são extremas e as possibilidades de mudança são mínimas, vivemos em 
+uma situação em que  o governo falha em cumprir sua responsabilidade em garantir o pleno uso das vidas individuais, e 
+se falha o governo, não podemos nos apartar de uma suposta entidade doente: somos nós que falhamos quando a 
+desigualdade está instalada e é responsabilidade objetiva e intransferível de cada indivíduo atuar na arena da 
+cidadania na busca por uma sociedade mais justa, no ambiente democrático em que se vive. 
+
+Com relação aos aspectos políticos de ações afirmativas e as suas relações com o sistema político, é importante 
+salientar que os governos eleitos democraticamente tem mecanismos próprios de manutenção de políticas cujas dinâmicas 
+são muito importantes. Uma discussão do cenário norte-americano é bastante elucidativa nesses aspectos, de particular 
+relevância para os governos de coalizão que tem se formado nas últimas das décadas no Brasil 
+\citep{rosenthal2004politics}. 
+
+Nesse sentido, a política de cotas é uma das possibilidades de ações afirmativas, que age mais diretamente para 
+garantir um aumento de oportunidades para uma população em situação desfavorável. A despeito de todos os grupos em 
+todos os países apontarem as singularidades de cada um dos casos, existe de fato um grande número de elementos em comum 
+no caso das políticas afirmativas e o seu conhecimento pode diferenciar a política de um fracasso ou de um sucesso. A 
+política de cotas em si não justa ou uma categoria moral, ela é uma técnica política com um fundamento moral. Apenas se 
+a sua execução levar ao objetivo planejado ela será uma boa política. Considerando a história, certamente temos de ser 
+bastante críticos e, principalmente, vigilantes.
+
+Não é possível negar que a via da política de cotas tem muitos perigos. Por um lado, ela pressupõe criar uma 
+desigualdade legal para criar uma igualdade econômica-política, afrontando as cláusulas de igualdade da maioria das 
+constituições democráticas. Podemos conceder que essa via compreende uma visão igualitária, que essa situação talvez 
+seja justificável, mas é muito difícil que consideremos essa como a \emph{única} maneira. Na maioria das vezes, sempre 
+que o discurso político fica encurralado, surgem as \emph{únicas} maneiras, quase sempre essas são as \emph{primeiras} 
+soluções encontradas para um problema muito complexo, não necessariamente as melhores.
+
+Por outro lado, é necessário lembrar que toda política que beneficia sistematicamente um grupo, necessariamente está 
+prejudicando outro grupo. Competindo pelos mesmos recursos, não há outra alternativa nesse caso, a sociedade pode estar 
+disposta a embarcar numa aventura dessa natureza, mas é incerto por quanto tempo essa mesma sociedade estará disposta a 
+prosseguir.
+
+Também não é possível ignorar que as políticas são realizadas por governos reais, em sistemas democráticas. Esses 
+governos sofrem as pressões eleitorais e o governo é um agente econômico poderoso, mas sofre as influências do mercado 
+como qualquer outro agente, ou seja, o governo não é um demônio de Maxwell econômico.
+
+Finalmente, os grupos sociais são livres e cada individuo reage diferentemente às diferentes situações. Alguns 
+movimentos são previsíveis e não é possível supor um povo virtuoso, deve-se supor o povo que existe, com todas as 
+virtudes e vícios normais da natureza humana.
+
+Todos esses pontos se adequam perfeitamente a todas as tentativas de engenharia social. O sistema de cotas é exatamente 
+isso.
+
+Estudando as políticas afirmativas na Índia, Malásia, Sri Lanka, Nigéria e Estados Unidos, T. Sowell aponta algumas 
+características comuns a todas:
+
+\begin{description}
+\item[Perenização:] A despeito do fato de todas as medidas propostas terem uma justificativa temporária, as políticas 
+de cotas não são eliminadas após o prazo, havendo sempre uma extensão do período inicialmente proposto.
+\item[Ampliação:] As iniciativas de políticas de cotas são sempre pontuais, com referência a alguns poucos direitos, 
+contudo esse rol aumentou em todos os países. Todos incluem acesso à educação superior e acesso a empregos públicos.
+\item[Reclassificação:] A população do país se reclassifica com relação às cotas, aumentando a população de fato 
+elegível. Isso pode acontecer por mudança de uma categoria para a outra ou pela inclusão de um maior número de grupos 
+étnicos ao longo do tempo.
+\item[Incentivos:] As cotas favorecem a entrada de um grupo ao acesso de certo direito. Com o passar do tempo tem-se 
+visto que a demanda aumenta pelos incentivos, ou seja, reduzindo a necessidade das condições objetivas para o acesso 
+normal ao direito.
+\item[Relações intergrupos:] Com a adesão ao sistema de cotas, todos os países descritos apresentaram problemas 
+intergrupos, com ênfase especial para o caso do Sri Lanka que enfrenta uma guerra civil há mais de 20 anos, tendo 
+partido de uma sociedade inicial de coexistência pacífica.
+\item[Discriminação interna:] Na maioria das vezes, os maiores beneficiados pelas cotas são os extratos da minoria em 
+melhor situação, frequentemente em situação melhor ou igual ao da população em geral. As cotas seletivamente segregam 
+ainda mais alguns recortes da minoria que deseja ajudar.
+\end{description}
+
+
+\section{Evidências Empíricas}
+\label{estatisticas}
+
+A partir da discussão anterior, vamos analisar a situação brasileira e levantar alguns dos problemas que podem surgir. 
+Já apresentamos como o aumento de renda brasileira contribui para um dos índices de bem-estar social, a expectativa de 
+vida. A renda brasileira (PIB per capita) na segunda metade do século passado está na figura \ref{fig:brasildataPIB}. Vemos 
+um significativo aumento a partir dos anos 2000, sinalizando uma oportunidade importante para a justiça social. Aumento 
+dessa magnitude não foi percebido no índice de desenvolvimento humano. Na figura \ref{fig:idhSelecao} vemos o IDH desde a 
+abolição da escravatura para as grandes regiões do mundo. A América Latina tem um IDH baixocom um pequeno sobressalto 
+na década de 80 e uma retomada do crescimento na década de 90. Já os países em desenvolvimento demonstram que a 
+desigualdade no mundo aumentou consideravelmente.
+
+
+<<brasildataPIB, fig.cap="\\tiny Evolução do PIB per capita brasileiro na segunda metade do Sec XX. Dados obtidos em\\citep{WORLDBANK}",fig.asp=0.56>>=
+brasildataPIB
+@
+
+Para uma perspectiva mais recente, a figura \ref{fig:idhSelecao} mostra a posição do Brasil comparada com alguns países 
+selecionados. A Inflexão do idh americano se coaduna com a queda da renda no início desse século e com o aumento da 
+desigualdade de renda. Nesse aspecto, países como o Brasil e a Índia estão melhorando na distribuição de renda, embora 
+tenham tido perdas efetivas no PIB também. Contudo, podemos ver o índice de GINI do Brasil desde o final do século 
+passado na figura \ref{fig:brasildataGINI}, mostrando uma desigualdade muito alta ainda, mas sistematicamente declinante 
+desde meados de 90. Vemos que no Brasil o índice de GINI é muito dependente da renda per capita.
+
+
+
+<<idhSelecaoLR, fig.cap="\\tiny Projeção do indice de Desenvolvimento Humano (IDH) para regiões do mundo, a partir de 1870. Dados obtidos(VERIFICAR) em\\citep{WORLDBANK}",fig.asp=0.56>>=
+idhSelecaoLR
+@
+
+<<idhSelecao, fig.cap="\\tiny Indice de Desenvolvimento Humano (IDH) para alguns países no final do século XX. Dados obtidos em\\citep{WORLDBANK}",fig.asp=0.56>>=
+idhSelecao
+@
+
+<<brasildataGINI, fig.cap="\\tiny Evolução do índice de GINI do Brasil. Dados obtidos em\\citep{WORLDBANK}",fig.asp=0.56>>=
+brasildataGINI
+@
+
+Podemos concluir que o Brasil é um país extremamente desigual, com pequena mobilidade social e com indicadores de 
+desenvolvimento humano medianos. Aqui temos o retrato dos grotões do Brasil e a necessidade importante de buscar a 
+justiça social e um padrão de vida digno para todos.
+
+Em todo o mundo, o acesso à educação superior tem se mostrado fundamental para a justiça social. Todos os países que 
+adotaram políticas afirmativas fizeram inicialmente considerando o acesso ao Ensino Superior. Vários movimentos 
+simultâneos tem acontecido, o início das políticas de cotas e o incremento significativo das vagas, tanto no setor 
+privado como no setor público, além de políticas de acesso com financiamento ou políticas de bolsas. Já vimos que o 
+Brasil optou por um sistema misto de cor/renda. Assim, devemos analisar alguns aspectos demográficos do país.
+
+Na figura \ref{fig:brasilPP} temos a proporção dos grupos de cor/raça na população total, desde o censo de 1872. O 
+grande aumento da população branca de 1872 a 1940 está relacionada com o fluxo migratório europeu e asiático no 
+período, bem como o êxodo de parte da população negra. A diminuição da população preta 1940 a 1960, contudo, deve-se 
+majoritariamente ao preconceito que acabou por reclassificar os indivíduos pretos como pardos. Tendência que é 
+revertida na década de 80 em diante, fruto de movimentos sociais e políticas de valorização dos negros que reforçaram a 
+identidade negra. 
+
+A população negra escrava já vinha declinando substancialmente e em 1887 já era inferior a um milhão de negros (figura 
+\ref{fig:escravosg}), época em que a mão de obra nas fazendas era substituída principalmente por italianos, em 
+condições sociais muito semelhantes à escravidão. Nesse cenário demográfico, como já dissemos, é absolutamente irreal o 
+discurso da reparação histórica. Mais do que isso, esse discurso pode apenas colaborar para a emergência de um ódio 
+racial explícito. Embora alguns possam considerar que a explicitação d ódio racial possa trazer benefícios com relação 
+à discriminação velada que existe no brasil, é necessário um excesso de ingenuidade para que consideremos que o ódio 
+racial explicito seja útil para alguma coisa, ainda mais de considerarmos as histórias semelhantes existentes no mundo. 
+O brasil pode ter um \emph{racismo cordial} com relação aos negros único no mundo, mas outros países tiveram relações 
+semelhantes com suas minorias e o ódio racial que surgiu após a adoção de políticas de cotas, notavelmente o Sri Lanka 
+e a Malásia, principalmente após a expulsão de parte da população chinesa para Cingapura independente.
+
+<<brasilPP, fig.cap="\\tiny  Fração da população brasileira por cor ou raça durante o Sec. XX. Dados obtidos em\\citep{IBGE}">>=
+brasilPP
+@
+
+<<escravosg, fig.cap="\\tiny (BRASIL) - População de escravos no final do sec. XIX. Dados obtidos em \\citep{IGBE}", fig.asp=0.56>>=
+escravosg
+@
+
+A dinâmica demográfica recente pode ser vista na figura \ref{fig:brasilPopP}, confirmando a tendência de aumento da 
+população preta, espelhada pela diminuição da população parda. A história demográfica brasileira mostra uma linha muito 
+tênue entre os pretos e pardos, que vem oscilando ao longo das décadas a medida em que a sociedade se torna mais 
+tolerante com a diversidade étnico-racial.
+
+Uma dinâmica mais sutil, mas igualmente importante, é a distinção entre os pretos e os brancos, ainda que mais nítida 
+do que a distinção entre pretos e pardos, também essa distinção oscila com os sentimentos da sociedade, e também com a 
+classe social.
+
+Nesse cenário, não parece necessário, sendo na verdade uma temeridade, querer traçar essas linhas de maneira 
+demarcatória. Mais uma vez, esse é um movimento esperado no horizonte das políticas de cotas, conforme a discussão da 
+seção anterior. Temos que deixar a história ser feita no que ela tem de pior? 
+
+<<brasilPopP,  fig.cap="\\tiny Evolução da população brasileira estratificada por cor ou raça. Dados obtidos em\\citep{IBGE}", fig.asp=0.56>>=
+brasilPopP
+@
+
+Ainda precisamos de mais um pouco de informação. Estamos considerando principalmente as cotas para o acesso ao Ensino 
+Superior. O número de anos de estudo da população brasileira com mais de 25 anos, estratificada por cor/raça, está na 
+figura \ref{fig:brAnosestudog}. Essa população ainda tem um número muito baixo de anos de estudo, em um intervalo de quase 
+20 anos, os brancos aumentaram 2 anos em sua média, tendo 8.1 anos em 2009. Essa é uma estatística que deixa bastante 
+claro como a Educação Superior é ainda um privilégio de minorias. A situação dos negros é ainda pior, tendo uma 
+diferença dos mesmos 2 anos entre eles, ou seja, em 2009 os negros estavam na mesma posição dos brancos 20 anos antes. 
+
+Essas pessoas não foram beneficiadas por cotas e nunca serão, mas seus filhos estão agora atingindo a idade para 
+ingressar no ensino superior. Mas apenas se esses filhos tiveram a oportunidade de estudar todo o ensino médio eles vão 
+poder tentar ingressar em uma Universidade. Aqui que se encontra a parte mais perversa da lógica exclusiva, o valor que 
+se dá a educação é dependente dos valores da família, famílias com menos educação tendem a valorizar menos a educação e 
+mais o trabalho, tolhendo dos próprios filhos uma oportunidade de mudança. 
+
+Mesmo algumas famílias que alegam valorizar a educação, sem referenciais claros sobre a cultura acadêmica, acabam por 
+valorizar mais títulos e diplomas, elementos simbólicos do estudo, mais do que o próprio estudo. Talvez o sistema de 
+cotas possa colaborar para mudar essa lógica, e aqui podemos observar claramente quais são as metas objetivas.
+
+
+
+<<brAnosestudog, fig.cap="\\tiny Anos de Estudo para a população brasileira acima de 25 anos, por cor/raça. Dados obtidos em\\citep{IBGE}", fig.asp=0.56>>=
+brAnosestudog
+@
+
+Com respeito a renda, os últimos dez anos viram grandes e consistentes avanços na participação de classes sociais antes 
+menos favorecidas. Na participação da população na Educação superior por quintos de renda (\figura \ref{fig:brquintosP}) 
+vemos que hoje o quinto de renda mais alta já representa menos da metade da população universitária, construindo uma 
+universidade menos elitista. Com relação aos anos de estudo (figura (\ref{fig:brquintosP}) vemos a enorme distância entre 
+os extratos de renda. São os universitários da primeira figura que vão alterar o panorama futuro da segunda figura, 
+construindo uma sociedade mais democrática. 
+
+<<brquintosP, fig.cap="\\tiny BRASIL. Participação dos quintos de renda na população matriculada na Educação Superior Pública. Dados obtidos em\\citep{IBGE-sis}">>=
+brquintosP
+@
+
+<<brquintosA, fig.cap="\\tiny BRASIL. Anos de estudo, por quintos de renda na população. Dados obtidos em\\citep{IBGE-sis}">>=
+brquintosA
+@
+
+\section{O Caso da UFCG}
+\label{ufcg}
+
+No caso específico da Universidade Federal de Campina Grande, o sistema de cotas foi implementado de maneira gradual, 
+até atingir 50\% das vagas. Uma característica interessante da população da UFCG é que a população original já tinha um 
+número substancialmente maior de alunos egressos da rede pública. Para a população em 2016 temos a distribuição 
+conforme a figura \ref{fig:pensinomedio}.
+
+<<pensinomedio, fig.cap="\\tiny UFCG-2016. Composição da população de alunos ativos na UFCG por tipo de Ensino Médio. Dados obtidos nos relatórios disponíveis em http://pre.ufcg.edu.br", fig.asp=0.56>>=
+pensinomedio
+@
+
+Apenas em 2015 que foi atingido o limite de 50\% da cota, de forma que a população cotista ainda é bastante pequena 
+(figura \ref{fig:pcotas1})
+
+
+<<pcotas1, fig.cap="\\tiny UFCG-2016. Comparação entre a população cotista e a população ingressante por vaga livre na UFCG. Dados obtidos nos relatórios disponíveis em http://pre.ufcg.edu.br", fig.asp=0.56>>=
+pcotas1
+@
+
+Observando a segmentação por tipos de cotas, é importante destacar que a ocupação de cada uma das cotas é bastante 
+diferente. Havendo mais alunos na cota com renda acima de 1,5 salário mínimo de renda mensal per capita do que na cota 
+com renda inferior. Da mesma forma, há mais estudantes não autodeclarados pretos, pardos ou indígenas do que estudantes 
+que se autodeclararam pretos, pardos ou indígenas. Ou seja, são as cotas consideradas mais favorecidas que estão mais 
+ocupadas. 
+
+O sistema de ocupação leva em conta a existência de vagas e realoca segundo o critério de vulnerabilidade, sendo 
+ocupadas por cotas menos vulneráveis apenas na falta de candidatos. Claramente tem havido número de candidatos 
+aprovados em número suficiente nas cotas mais vulneráveis. O critério de aprovação é essencialmente trivial, uma vez 
+que é publicado com antecedência e o aluno sabe seu valor antes da inscrição no SiSU (400 pontos no ENEM), portanto o 
+que está havendo é uma falta de candidatos nessas cotas.
+
+Não há como não pensar na afirmação de Sowell de que os melhores colocados entre os menos favorecidos é que se 
+beneficiam das cotas. Contudo, a questão aqui é de \emph{falta de candidatos}! Talvez a população com renda abaixo de 
+1,5 sm ou negra não tenha sequer o Ensino Médio e por isso faltes vagas. Isso é particularmente curioso em um estado 
+que tem o maior número de negros no Brasil.
+
+Mas esse cenário deixa bastante claro que esse processo seletivo é praticamente imune a possíveis reclassificações. Ou 
+seja, imaginemos que um branco se autodeclare negro, nesse cenário vemos que o prejuízo que ele pode causar é bastante 
+reduzido, se temos como meta os objetivos da lei de cotas. Parece muito mais pertinente deixar a autodeclaração livre e 
+submeter aquelas pessoas que talvez se classifiquem de maneira inadequada à reprovação social, uma força poderosa que 
+não deve ser menosprezada.
+
+<<pcotas, fig.cap="\\tiny UFCG-2016. Composição da população de alunos ativos na UFCG por tipo de Cota, estratificado por centro acadêmico. Dados obtidos nos relatórios disponíveis em http://pre.ufcg.edu.br", fig.asp=0.56 >>=
+pcotas
+@
+
+Uma preocupação importante é saber qual é o nível acadêmico das pessoas que estão entrando pelas cotas. Na figura 
+\ref{fig:pENEMcotas}, vemos a nota dos alunos ativos em 2016, segmentados por cotas. O Traço indica a mediana e o ponto 
+indica a média das distribuições. Existe uma tendência menor nas cotas, estatisticamente significativa (painel direito 
+na figura \ref{fig:estatistica}).
+
+
+
+<<pENEMcotas, fig.cap="\\tiny UFCG-2015. Comparação da nota obtida pelos alunos no ENEM, por cotas.Dados obtidos nos relatórios disponíveis em http://pre.ufcg.edu.br", fig.asp=0.56>>=
+pENEMcotas
+@
+
+Embora os cotistas desempenhem pior no ENEM, precisamos saber como é a sua evolução acadêmica. Comparando os alunos, 
+semestre a semestre (figura \ref{fig:pcotistaCRAevol}, \ref{fig:pcotistaIEAevol}) segundo dois indicadores acadêmicos distintos 
+vemos que os cotistas, rapidamente, superam a distância que os separava dos não cotistas, apresentando desempenho 
+acadêmico semelhante (eles são estatisticamente semelhantes conforme pode ser visto na figura \ref{fig:estatistica}, o 
+painel do meio indica a análise do 2º período e o painel da direita mostra os dados para o 6º período)
+
+
+<<pcotistaCRAevol, fig.cap="\\tiny UFCG-2015. Comparação do desempenho acadêmico (CRA) dos alunos, por período de ingresso, por cotas.Dados obtidos nos relatórios disponíveis em http://pre.ufcg.edu.br">>=
+pcotistaCRAevol
+@
+
+<<pcotistaIEAevol, fig.cap="\\tiny UFCG-2015. Comparação do desempenho acadêmico (IEA) dos alunos, por período de ingresso, por cotas.Dados obtidos nos relatórios disponíveis em http://pre.ufcg.edu.br">>=
+pcotistaIEAevol
+@
+
+
+<<estatistica, fig.cap="\\tiny UFCG-2015. Comparando médias ENEM e CRA para o 2º e o 6º período, por tipos de cotas. Mostrando intervalo de confiança 99\\% para a relação entre cada uma das cotas utilizando o teste de Tukey em conjunção com ANOVA.",  fig.asp=0.56>>=
+estatisticas
+@
+
+Existe a possibilidade de não ter havido nenhuma evolução dos cotistas, apenas o fato do ENEM não ser um bom preditor 
+para o desempenho acadêmico. O CRA, de fato, não é um bom preditor para o sucesso acadêmico mas a correlação de IEA com 
+sucesso acadêmico é bem maior. Ou seja, é possível que o alunos estejam chegando igualmente preparados para a vida 
+acadêmica, a despeito de sua diferença de desempenho no ENEM. 
+
+Uma preocupação frequente e importante na discussão sobre cotas é o fato de que as cotas podem permitir o ingresso de 
+pessoas pouco preparadas e portando com grande chance de insucesso. A análise de desempenho acima mostra que essa 
+hipótese não se verifica para a UFCG. Ainda mais importante, podemos verificar a evasão dos alunos por cotas (figura 
+\ref{fig:evadCOTA}). Segmentando os alunos que ingressaram a partir de 2013 pela situação acadêmica, vemos que os alunos 
+cotistas desistem menos do curso, evadem menos por motivos acadêmicos e reingressam no curso por novo vestibular na 
+mesma proporção dos alunos de vagas livres.
+
+<<evadCOTA, fig.cap="\\tiny UFCG-2015. Comparação da evasão dos alunos, por cotas.Dados obtidos nos relatórios disponíveis em http://pre.ufcg.edu.br">>=
+evadCOTA
+@
+
+\section{Conclusão}
+\label{conclusão}
+
+
+O Brasil sofreu mudanças dramáticas em seu tecido social no final do sec. XIX, revolveu-se internamente no início do 
+sec. XX e as primeiras décadas desse século viram um Brasil pobre e sem identidade. Forças econômicas novas surgiram, a 
+industrialização lenta foi construída com a exclusão social e, sobretudo, sem democracia.
+
+Com a redemocratização acontecendo em um clima internacional conservador e economicamente adverso, apenas a partir da 
+década de 90 podemos dizer que o Brasil constrói uma identidade, entendendo-se como um país com enorme trabalho pela 
+frente. O crescimento a partir da década de 90 tem se mantido de forma a assegurar a saída do país da miséria, mas não 
+para acabar com os miseráveis. 
+
+É a partir dos anos 2000 que o pouco desenvolvimento econômico brasileiro passa a ser o suficiente para o surgimento de 
+movimentos sociais que possam enriquecer a vida social brasileira, passamos a compreender o papel do negro na 
+sociedade, principalmente com a sua maior participação em espaços visíveis da sociedade, o papel das mulheres, da 
+diversidade sexual. Essa sociedade mais humana e mais compreensível vai-se construindo devagar e com alguns revéses, 
+mas inexoravelmente avança.
+
+Um sinal desses avanços é o surgimento da política de cotas. É importante que se entenda direito, porque é dessa forma 
+mesmo que surgiu, e sempre surge.
+
+De maneira bastante sensível à situação da educação no Brasil, as cotas para a Educação superior surgem mescladas para 
+grupos étnico-raciais e para classe social. Mesmo corrigindo para a questão da renda, o negro é sub-representado na 
+educação superior, mas num país com índices de escolaridade tão baixos, construímos uma sociedade igualitária pensando 
+também nos pobres.
+
+Apenas recentemente atingimos a universalização do primeiro ciclo da educação fundamental. Precisamos de dez anos para 
+atingir a universalização da alfabetização. Percorremos o caminho certo, pensando nos dois extremos da educação e 
+acionando políticas específicas. Não podemos imaginar um trabalho rápido nessa área tão estratégica.
+
+Dobramos as vagas na Educação Superior e agora as classes pobres tem acesso à esse nível de ensino. Essa era uma 
+fenômeno crescente antes da política de cotas e agora vai ser intensificado.
+
+A situação da UFCG não pode ser estendida trivialmente para o resto do sistema das IFES, considerando a heterogeneidade 
+das instituições e das populações, mas essa experiência afasta o medo da perda da qualidade, anima com o resultado de 
+uma evasão mais baixa e levanta algumas perguntas quanto a ocupação das vagas que merecem uma investigação mais 
+aprofundada.
+
+Nesse período podemos dizer que as cotas não são um desastre, mas parece muito cedo para dizer se são boas. O prazo 
+proposto na lei, 10 anos, parece um tempo razoável para criar, juntamente com outras políticas inclusivas, uma geração 
+de pessoas com nível superior, que tende, por si, a incentivar seus filhos no mesmo caminho.
+
+Serão os 10 anos suficientes? É difícil de dizer agora, apenas nesse período que teremos um número suficiente de 
+egressos para analisar. Por outro lado, outras políticas inclusivas vão continuar produzindo seus frutos.
+
+O risco de políticas como as cotas é que muitos se sentem prejudicados ao não entrar na Universidade, quando na verdade 
+as diferenças são muito poucas, por outro lado, que governo coloca em pauta retirar uma cota? Uma cota produz uma 
+clientela, um grupo que se sente beneficiado com ela e prejudicado sem ela, mesmo que não precise mais de nenhum 
+incentivo.
+
+A lição geral que tiramos, a nossa política de cotas segue de perto algumas más características de outras experiências, 
+mas a sua execução tem sido pouco danosa porque no Brasil estamos vendo uma diferença pequena no desempenho dos alunos 
+e nenhuma diferença no desempenho acadêmico. Infelizmente isso pode ser uma consequência do baixo nível global de nossa 
+educação.
+
+Outra característica bastante própria é o nosso recorte demográfico, temos uma cota implantada para mais de 60\% da 
+população, considerando a dominância do ensino da rede pública no Ensino Médio. Nesse recorte, as divisões entre os 
+grupos são bastante tênues e ganhamos em deixar a própria sociedade estabelecer os seus critérios sem nenhuma divisão 
+estanque.
+
+Tudo leva a crer que os avanços sociais vão prosseguir. Não veremos a desigualdade, medida pelo índice de GINI, cair 
+rapidamente, mas podemos fazer uma transição para uma faixa de IDH maior e melhor um pouco a mobilidade social, 
+preocupados com políticas econômicas redistributivas e alertas para medidas em que algum momento podem ser apenas 
+populistas.
+
+
+
+
+
+\bibliographystyle{alpha}
+
+\bibliography{cotas}
+
+\end{document}

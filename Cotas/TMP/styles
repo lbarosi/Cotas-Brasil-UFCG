@@ -1,0 +1,18 @@
+graphicx 
+framed 
+alltt 
+inputenc utf8
+hyphenat 
+xcolor 
+graphicx 
+blindtext 
+babel portuguese
+natbib 
+hyperref 
+amsmath 
+amsfonts 
+amssymb 
+amsthm 
+wasysym 
+caption font=scriptsize,skip=-5pt, width = 0.8\linewidth
+upquote 
