@@ -58,7 +58,11 @@ desempenhoAlunos <- function(PERIODO){
                             ) 
   
       getfiles    <- lapply(files[grep(PERIODO,files, fixed = TRUE)], function(x) { 
+<<<<<<< HEAD
+                        suppressWarnings( read_excel(x))
+=======
                         suppressWarnings( read_excel(x, skip = 1))
+>>>>>>> 5551d39d39ca35a8f353ff340a5f500f2f3e80f9
                                                 }
                         )
   
@@ -81,8 +85,14 @@ alunosUFCG <- function(PERIODOS, ES) {
   #argumento deve ser um vetor de periodos
   if (!("FALSE" %in% grepl("\\d{4}.\\d",PERIODOS, fixed = FALSE))) {
     if (ES %in% tipos ) {
+<<<<<<< HEAD
+      data_typesA  <-c("text","text", "text", "numeric", "text", "text", "text", 
+                       "text", "text", "text", "text", "text", "text", "text" )   
+      alunos <- read_excel("DADOS/Alunos/Alunos.xlsx", col_types = data_typesA,  sheet = 1)
+=======
       
       alunos <- read_excel("DADOS/Alunos/Alunos.xlsx", sheet = 1)
+>>>>>>> 5551d39d39ca35a8f353ff340a5f500f2f3e80f9
       alunos <- merge(alunos, cursos, by = "CURSO", all = FALSE)
       #Uso do ddplyr: cuidado com as dependências com outras bibliotecas
       alunos <- select(alunos, CPF,	MATRÍCULA, SEXO, NASCIMENTO, NATURALIDADE,	ESTADO,	

@@ -6,7 +6,13 @@ library(cowplot)
 library(extrafont)
 library(scales)
 library(mosaic)
+<<<<<<< HEAD
+library(tictoc)
 
+tic()
+=======
+
+>>>>>>> 5551d39d39ca35a8f353ff340a5f500f2f3e80f9
 source("./analiseCursosBASEv7.r")
 
 #-------------------------------
@@ -485,7 +491,11 @@ pensinomedio <-   ggplot(emalunos, aes(TIPO_ENSINO_MEDIO, Alunos, fill = TIPO_EN
         axis.text = element_text(family = "Verdana"),
         axis.text = element_text(size = 6, hjust = 0),
         plot.title = element_text(size=8, face = "bold", family="Verdana"))+
+<<<<<<< HEAD
+  scale_fill_brewer(palette = "paired")
+=======
   scale_fill_brewer(palette = "clarity")
+>>>>>>> 5551d39d39ca35a8f353ff340a5f500f2f3e80f9
   
 #-----------------------------------------------------------------------------
 #População Cotas
@@ -605,7 +615,13 @@ pcotistaCRAevol <- ggplot(filter(ativos, Semestres>1 & Semestres < 8), aes(COTIS
 
 #------------------------
 labels <- c("Livres", "NAPPI>", "APPI>", "NAPPI<", "APPI<")
+<<<<<<< HEAD
+data_typesA  <-c("text","text", "text", "numeric", "text", "text", "text", 
+                 "text", "text", "text", "text", "text", "text", "text" )  
+alunosTotal <- read_excel("./DADOS/Alunos/Alunos.xlsx", col_types = data_typesA)
+=======
 alunosTotal <- read_excel("./DADOS/Alunos/Alunos.xlsx")
+>>>>>>> 5551d39d39ca35a8f353ff340a5f500f2f3e80f9
 alunosTotal$PERIODO_INGRESSO <- as.numeric(alunosTotal$PERIODO_INGRESSO)
 alunosTotal$COTISTA <- ifelse(is.na(alunosTotal$COTISTA),"1",cotasalunos$COTISTA)
 alunosTotal <- filter(alunosTotal, PERIODO_INGRESSO > 2013)
@@ -712,3 +728,8 @@ p3 <- mplot(testeCRA6, system = "ggplot") + ggtitle("CRA - 6 Período - 99%CF") 
 #-------------------------
 
 estatisticas <- plot_grid(p1,p2,p3, ncol = 3)
+<<<<<<< HEAD
+
+toc(quiet = FALSE)
+=======
+>>>>>>> 5551d39d39ca35a8f353ff340a5f500f2f3e80f9
